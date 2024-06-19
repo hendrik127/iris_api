@@ -13,7 +13,7 @@ def fetch_iris_data() -> Optional[str]:
         Optional[str]: The JSON string of the data if available,
         otherwise None.
     """
-    url = os.getenv("DATA_SOURCE_API")
+    url = os.getenv("DATA_URL")
     df = pd.read_csv(url)
     df = df.reset_index().rename(columns={'index': 'id'})
     df['id'] = df['id'] + 1
