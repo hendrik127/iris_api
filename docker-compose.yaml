@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile.dev
+    command: sh -c "python3 database.py && uvicorn main:app --host 0.0.0.0 --port 80 --reload"
+    volumes:
+      - "./api:/api"
+    ports:
+      - "80:80"
+    env_file:
+      - .env
+    depends_on:
+      - database
+    restart: on-failure:5
+
+  database:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
