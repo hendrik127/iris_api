@@ -1,1 +1,0 @@
-python initial_data.py
