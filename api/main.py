@@ -7,14 +7,14 @@ from database import Iris, engine
 from fastapi.middleware.cors import CORSMiddleware
 
 
-from fastapi import FastAPI
-from fastapi.responses import JSONResponse
-import pandas as pd
-from sklearn.datasets import load_iris
-import matplotlib.pyplot as plt
-import seaborn as sns
-from io import BytesIO
-import base64
+# from fastapi import FastAPI
+# from fastapi.responses import JSONResponse
+# import pandas as pd
+# from sklearn.datasets import load_iris
+# import matplotlib.pyplot as plt
+# import seaborn as sns
+# from io import BytesIO
+# import base64
 
 app = FastAPI()
 

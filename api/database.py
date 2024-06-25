@@ -21,7 +21,7 @@ class Iris(SQLModel, table=True):
     petal_width: float
     petal_ratio: Optional[float]
     species: str
-    is_outlier: bool
+    is_outlier: Optional[bool]
 
 
 def create_tables():
