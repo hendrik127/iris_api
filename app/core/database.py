@@ -17,7 +17,6 @@ engine = create_engine(DATABASE_URL, echo=True)
 
 
 def create_tables():
-    print("CREARIN")
     SQLModel.metadata.create_all(engine)
     populate_database()
 
