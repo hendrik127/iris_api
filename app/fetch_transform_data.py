@@ -38,27 +38,6 @@ def mark_outliers(df: pd.DataFrame) -> pd.DataFrame:
         df.loc[~outliers_mask, 'is_outlier'] = False
     return df
 
-# def plot_outliers(dataframe):
-#     # Create a pairplot of the DataFrame with species hue
-#     pairplot = sns.pairplot(dataframe, hue='species', plot_kws={'alpha': 0.7})
-#     # Highlight outliers in red
-#     for ax in pairplot.axes.flat:
-#         if ax is not None:
-#             ax.scatter(
-#                 dataframe[dataframe['is_outlier']]['sepal_length'],
-#                 dataframe[dataframe['is_outlier']]['sepal_width'],
-#                 color='red', marker='o', s=30, label='Outlier'
-#             )
-#     # Save the plot to a BytesIO buffer
-#     buffer = BytesIO()
-#     plt.legend()
-#     plt.savefig(buffer, format='png')
-#     buffer.seek(0)
-#     # Encode the image in base64 for easy transfer
-#     img_str = base64.b64encode(buffer.read()).decode('utf-8')
-#     plt.close()  # Close the plot to free memory
-#     return img_str
-
 
 def transform_iris_data(df: pd.DataFrame) -> Optional[str]:
     # Remove duplicates.
