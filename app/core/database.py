@@ -1,6 +1,6 @@
 from sqlmodel import SQLModel, create_engine
 from fetch_transform_data import fetch_and_transform_iris_data
-from sqlmodel import Session
+from sqlmodel import Session, select
 from models import Iris
 from typing import List
 from pydantic import TypeAdapter, ValidationError
@@ -18,13 +18,19 @@ engine = create_engine(DATABASE_URL, echo=True)
 
 def create_tables():
     SQLModel.metadata.create_all(engine)
-    populate_database()
+
+    with Session(engine) as session:
+        irises = select(Iris)
+        result = session.exec(irises).first()
+        if not result:
+            populate_database()
 
 
 def populate_database() -> None:
     """
         Fetches iris data, transforms it, and writes it to the database.
     """
+
     with Session(engine) as session:
         iris_data = fetch_and_transform_iris_data()
         iris_list_adapter = TypeAdapter(List[Iris])
