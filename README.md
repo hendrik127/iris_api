@@ -22,7 +22,7 @@ pytest -v
 
 
 ## Production
-An image is built and pushed to ghcr when there is a push to the main branch and files have changed in the **/app** folder. That image is used along with the default postgres image run the app.
+An image is built and pushed to ghcr when there is a push to the main branch and files have changed in the **/app** folder. That image is used along with the default postgres image run the app. Images are built for amd64 and arm64.
 ```
 docker-compose -f docker-compose.prod.yaml up -d
 ```
