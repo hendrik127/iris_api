@@ -39,7 +39,7 @@ async def get_cleaned_irises(session: SessionDep) -> List[Iris]:
         List[Iris]: Returns a list of irises that are outliers.
     """
     result = session.exec(select(Iris).where(
-        Iris.is_outlier != False)).all()  # pylint: disable=C0121
+        Iris.is_outlier == False)).all()  # pylint: disable=C0121
     return result
 
 
