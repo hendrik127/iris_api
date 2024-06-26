@@ -2,12 +2,11 @@ name: Pylint
 
 on:
   push:
-    branches:
-      - main
-      - master
+    branches: ['*']
+    paths: 'app/**'
   pull_request:
-    branches:
-      - '*'
+    branches: ['*']
+    paths: 'app/**'
 
 jobs:
   lint:
