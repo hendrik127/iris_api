@@ -8,6 +8,7 @@ from typing import Optional
 from sqlmodel import SQLModel, Field
 
 
+# pylint: disable=R0903
 class Iris(SQLModel, table=True):
     """
     Represents an Iris flower with attributes for sepal and petal measurements,
