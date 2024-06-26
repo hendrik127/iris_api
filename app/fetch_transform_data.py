@@ -47,8 +47,6 @@ def mark_outliers(df: pd.DataFrame) -> pd.DataFrame:
     """
     numeric_cols = df.select_dtypes(include='number').columns
     for column in numeric_cols:
-        if column == 'is_outlier':
-            continue
         # Calculate Q1 (25th percentile) and Q3 (75th percentile)
         q1 = df[column].quantile(0.25)
         q3 = df[column].quantile(0.75)

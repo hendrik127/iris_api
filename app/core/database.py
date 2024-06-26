@@ -47,7 +47,6 @@ def populate_database() -> None:
         iris_list_adapter = TypeAdapter(List[Iris])
         try:
             result = iris_list_adapter.validate_json(iris_data)
-            print(result)
         except ValidationError as e:
             print(e)
         for iris in result:
