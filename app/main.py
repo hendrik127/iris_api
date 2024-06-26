@@ -1,28 +1,19 @@
+"""
+FastAPI Application Configuration
+
+This module configures a FastAPI application instance (`app`) with middleware
+and routers for handling API requests. It sets up CORS (Cross-Origin Resource
+Sharing) middleware to allow cross-origin requests from any origin (`*`) and
+configures API routes using the `api_router` imported from api.main.
+"""
+
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from api.main import api_router
 
-# @asynccontextmanager
-# async def lifespan(app: FastAPI):
-#     """
-#     Checks whether the database is populated.
-#     Populates if necessary.
-#     """
-#     with Session(engine) as session:
-#         irises = select(Iris)
-#         result = session.exec(irises).first()
-#         if not result:
-#             populate_database()
-#     yield
-
 
 app = FastAPI()
-
-
-# def get_session():
-#     with Session(engine) as session:
-#         yield session
-
 
 origins = ["*"]
 
@@ -35,8 +26,3 @@ app.add_middleware(
 )
 
 app.include_router(api_router, prefix='/v1')
-
-
-
-
-

@@ -1,12 +1,19 @@
-from sqlmodel import SQLModel, create_engine
-from fetch_transform_data import fetch_and_transform_iris_data
-from sqlmodel import Session, select
-from models import Iris
+"""
+This module manages initial database operations for Iris data.
+
+It defines functions to create database tables if they do not exist,
+populate the database with fetched and transformed iris data, and
+validate the data structure before committing it to the database.
+
+"""
+import os
 from typing import List
+from sqlmodel import SQLModel, create_engine
+from sqlmodel import Session, select
 from pydantic import TypeAdapter, ValidationError
 from dotenv import load_dotenv
-import os
-
+from models import Iris
+from fetch_transform_data import fetch_and_transform_iris_data
 
 load_dotenv(os.path.join(os.path.dirname(__file__), '..', 'example.env'))
 
@@ -16,7 +23,11 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 engine = create_engine(DATABASE_URL, echo=True)
 
 
-def create_tables():
+def create_tables() -> None:
+    """
+    Create database tables if they do not exist.
+    Populates database if data does not exist.
+    """
     SQLModel.metadata.create_all(engine)
 
     with Session(engine) as session:

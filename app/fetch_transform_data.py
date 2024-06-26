@@ -1,17 +1,30 @@
-import pandas as pd
-from typing import Optional
-from dotenv import load_dotenv
+"""
+
+Data Processing Functions for Iris Dataset
+
+This module provides functions to fetch, process, and transform iris dataset
+data stored in CSV format. It includes functions for fetching data from a URL
+specified in environment variables, marking outliers in the dataset,
+transforming the dataset by removing duplicates,
+adding ratio columns, marking outliers,
+and converting the transformed dataset to JSON format.
+"""
+
+
 import os
+from typing import Optional
+import pandas as pd
+from dotenv import load_dotenv
 
 
 load_dotenv(os.path.join(os.path.dirname(__file__), '..', 'example.env'))
 
 
 def fetch_iris_data() -> pd.DataFrame:
-    """Fetches iris data from given source.
+    """Fetches iris data from a given source URL specified in the environment variables.
+
     Returns:
-        pd.DataFrame: Dataframe if data available,
-        otherwise None.
+        pd.DataFrame: DataFrame containing the iris data if available, otherwise None.
     """
     url = os.getenv("DATA_URL")
     dataframe = pd.read_csv(url)
@@ -19,19 +32,32 @@ def fetch_iris_data() -> pd.DataFrame:
 
 
 def mark_outliers(df: pd.DataFrame) -> pd.DataFrame:
+    """Marks outliers in the given DataFrame.
+
+    An outlier is defined as a value that is outside 0.5 times the 
+    interquartile range (IQR) above the 75th percentile or below the
+    25th percentile for each numeric column.
+
+    Args:
+        df (pd.DataFrame): DataFrame containing the iris data.
+
+    Returns:
+        pd.DataFrame: DataFrame with an added 'is_outlier'
+        column where True indicates an outlier.
+    """
     numeric_cols = df.select_dtypes(include='number').columns
     for column in numeric_cols:
         if column == 'is_outlier':
             continue
         # Calculate Q1 (25th percentile) and Q3 (75th percentile)
-        Q1 = df[column].quantile(0.25)
-        Q3 = df[column].quantile(0.75)
+        q1 = df[column].quantile(0.25)
+        q3 = df[column].quantile(0.75)
         # Calculate the Interquartile Range (IQR)
-        IQR = Q3 - Q1
+        iqr = q3 - q1
         c = 0.5
         # Determine the lower and upper bounds for outliers
-        lower_bound = Q1 - c * IQR
-        upper_bound = Q3 + c * IQR
+        lower_bound = q1 - c * iqr
+        upper_bound = q3 + c * iqr
         # Mark the rows that are outliers
         outliers_mask = (df[column] < lower_bound) | (df[column] > upper_bound)
         df.loc[outliers_mask, 'is_outlier'] = True
@@ -40,6 +66,15 @@ def mark_outliers(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def transform_iris_data(df: pd.DataFrame) -> Optional[str]:
+    """Transforms the iris DataFrame by removing duplicates,
+      adding ratio columns, marking outliers, and resetting the index.
+
+    Args:
+        df (pd.DataFrame): DataFrame containing the iris data.
+
+    Returns:
+        Optional[str]: JSON string representation of the transformed DataFrame.
+    """
     # Remove duplicates.
     df.drop_duplicates(inplace=True)
     # Add columns for the ratios
@@ -54,4 +89,10 @@ def transform_iris_data(df: pd.DataFrame) -> Optional[str]:
 
 
 def fetch_and_transform_iris_data():
+    """
+    This function combines fetch_iris_data and transform_iris_data.
+
+    Returns:
+        Optional[str]: JSON string representation of the transformed iris data.
+    """
     return transform_iris_data(fetch_iris_data())
