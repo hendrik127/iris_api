@@ -8,6 +8,8 @@ To start development only one command is needed.
 ```
 docker-compose up -d
 ```
+Endpoints and docs at  http://localhost/docs
+
 App files are mounted to the container so reload is supported.
 ## Linting & Testing
 When running in development mode.
@@ -23,4 +25,6 @@ An image is built and pushed to ghcr when there is a push to the main branch and
 ```
 docker-compose -f docker-compose.prod.yaml up -d
 ```
+Endpoints and docs at http://localhost:8000/docs
+
 
