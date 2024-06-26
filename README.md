@@ -5,7 +5,7 @@ git clone https://github.com/hendrik127/iris_api.git
 cd iris_api
 ```
 ## Development
-To start development only one command is needed.
+To start development only one command is needed. **Docker must be installed**.
 ```
 docker-compose up -d
 ```
