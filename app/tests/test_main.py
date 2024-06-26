@@ -36,9 +36,8 @@ def test_get_outlier_irises():
     for iris in data:
         assert iris.get('is_outlier') is True, (
             f"Iris with id {iris.get('id')} "
-            "is not marked as an outlier"
-        )
-        
+            "is not marked as an outlier")
+
 
 def test_get_cleaned_irises():
     """
