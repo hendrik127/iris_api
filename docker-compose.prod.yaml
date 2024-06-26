@@ -1,15 +1,15 @@
 version: '3.8'
-name: iris
+name: iris-prod
 services:
   api:
     build:
       context: ./app
-      dockerfile: Dockerfile.dev
-    command: sh -c "python3 initial_data.py && uvicorn main:app --host 0.0.0.0 --port 80 --reload"
+      dockerfile: Dockerfile
+    command: sh -c "python3 initial_data.py && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
     volumes:
       - "./app:/app"
     ports:
-      - "80:80"
+      - "8000:8000"
     env_file:
       - example.env
     depends_on:
