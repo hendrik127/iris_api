@@ -1,0 +1,3 @@
+# app/.pylintrc
+[MASTER]
+disable = E401

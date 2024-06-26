@@ -3,7 +3,7 @@ Tests for the Iris API endpoints.
 """
 
 from fastapi.testclient import TestClient
-from main import app 
+from main import app
 
 client = TestClient(app)
 
@@ -34,8 +34,11 @@ def test_get_outlier_irises():
     data = response.json()
     assert isinstance(data, list)
     for iris in data:
-        assert iris.get('is_outlier') is True, f"Iris with id {iris.get('id')} is not marked as an outlier"
-
+        assert iris.get('is_outlier') is True, (
+            f"Iris with id {iris.get('id')} "
+            "is not marked as an outlier"
+        )
+        
 
 def test_get_cleaned_irises():
     """
@@ -51,7 +54,10 @@ def test_get_cleaned_irises():
     data = response.json()
     assert isinstance(data, list)
     for iris in data:
-        assert iris.get('is_outlier') in [False, None], f"Iris with id {iris.get('id')} is marked as an outlier"
+        assert iris.get('is_outlier') in [False, None], (
+            f"Iris with id {iris.get('id')} "
+            "is marked as an outlier"
+        )
 
 
 def test_get_irises_by_species():
@@ -72,8 +78,10 @@ def test_get_irises_by_species():
     for iris in data:
         species_actual = iris.get('species').lower()
         species_expected = species.lower()
-        assert species_actual == species_expected, f"Iris with id {iris.get('id')} does not belong to species {species}"
-
+        assert species_actual == species_expected, (
+            f"Iris with id {iris.get('id')} "
+            f"does not belong to species {species}"
+        )
     # Test for all species
     response = client.get("/v1/iris/all")
     assert response.status_code == 200
